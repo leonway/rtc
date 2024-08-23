@@ -1,0 +1,11 @@
+{
+  // 在这里添加推荐的 VSCode 扩展插件
+  "recommendations": [
+    // ESLint 扩展，用于 JavaScript 代码的静态分析和风格检查
+    "dbaeumer.vscode-eslint",
+    // Stylelint 扩展，用于 CSS/SCSS/Less 等样式代码的风格检查
+    "stylelint.vscode-stylelint",
+    // Prettier 扩展，用于代码格式化和风格一致性
+    "esbenp.prettier-vscode"
+  ]
+}

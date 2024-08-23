@@ -1,0 +1,16 @@
+**/uni_modules/**
+**/node_modules/**
+**/build/**
+**/dist/**
+**/coverage/**
+**/es/**
+**/lib/**
+**/*.min.css
+**/*-min.css
+**/*.bundle.css
+**/*.json
+**/*.js
+**/*.ts
+**/*.tsx
+**/*.md
+
