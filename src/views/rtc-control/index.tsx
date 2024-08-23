@@ -5,6 +5,7 @@ import { Button } from 'antd'
 
 interface HomeProps {}
 
+const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
 function full(ele) {
   if (ele.requestFullscreen) {
       ele.requestFullscreen();
@@ -32,7 +33,7 @@ const Home: React.FC<HomeProps> = () => {
     // videoRef.current?.play()
   }
   useEffect(() => {
-    const ws = new WebSocket("ws://10.90.0.126:3001/armaz-immersal-websocket",'mp')
+    const ws = new WebSocket(wssUrl,'mp')
     wsRef.current = ws;
     ws.addEventListener('message', (d) => {
       const {event} = JSON.parse(d.data)
