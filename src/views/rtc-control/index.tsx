@@ -6,6 +6,7 @@ import { Button } from 'antd'
 interface HomeProps {}
 
 const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
+// const wssUrl = "ws://10.90.0.126:3001/armaz-immersal-websocket"
 function full(ele) {
   if (ele.requestFullscreen) {
       ele.requestFullscreen();

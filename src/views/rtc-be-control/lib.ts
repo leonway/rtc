@@ -67,7 +67,9 @@ export const init = (ws:WebSocket)=>{
 
   async function createAnswer(offer) {
     const stream = await getScreenStream()
-    pc.addStream(stream)
+    stream.getTracks().forEach((track) => {
+      pc.addTrack(track, stream)
+    })
     await pc.setRemoteDescription(offer)
     await pc.setLocalDescription(await pc.createAnswer())
     console.log('create answer \n', JSON.stringify(pc.localDescription))
