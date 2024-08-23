@@ -1,8 +1,6 @@
 import { lazy } from 'react'
 import { Navigate } from 'react-router-dom'
 import type { RouteObject } from 'react-router-dom'
-import request from '@/utils/request'
-console.log('request', request)
 
 const Layout = lazy(() => import('@/layout'))
 const Home = lazy(() => import('@/views/home'))
