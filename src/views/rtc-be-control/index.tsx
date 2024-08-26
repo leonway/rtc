@@ -3,8 +3,8 @@ import s from './index.module.less'
 import { init } from './lib'
 import { Button } from 'antd'
 interface HomeProps {}
-// const wssUrl  = "ws://10.90.0.40:3001/armaz-immersal-websocket"
-const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
+const wssUrl  = "ws://10.90.0.40:3001/armaz-immersal-websocket"
+// const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
 const Home: React.FC<HomeProps> = () => {
   const wsRef = useRef<WebSocket>()
   const startRef = useRef<()=>void>()

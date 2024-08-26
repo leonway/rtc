@@ -17,7 +17,13 @@ export const init = (ws:WebSocket,onReady: (start:() => void) => void)=>{
     }
   })
 
-  const pc = new window.RTCPeerConnection()
+  const pc = new window.RTCPeerConnection({
+    iceServers: [
+      {
+        urls: 'stun:stun.l.google.com:19302',
+      },
+    ],
+  })
   pc.ondatachannel = (e) => {
     console.log('data', e)
     e.channel.onmessage = (e) => {
@@ -55,6 +61,8 @@ export const init = (ws:WebSocket,onReady: (start:() => void) => void)=>{
   }
 
   pc.onicecandidate = (e) => {
+    console.log('pc.onicecandidate',e);
+
     if (e.candidate) {
       // 告知其他人
       ws.send(JSON.stringify({

@@ -10,7 +10,14 @@ export const init = (ws, handleStream) => {
     }
   })
 
-  const pc = new window.RTCPeerConnection({})
+  const pc = new window.RTCPeerConnection({
+    iceServers: [
+      {
+        urls: 'stun:stun.l.google.com:19302',
+      },
+    ],
+  })
+
   pc.getSenders().forEach((sender) => {
     console.log('sender', sender)
   })
@@ -29,7 +36,7 @@ export const init = (ws, handleStream) => {
   // onicecandidate iceEvent
   // addIceCandidate
   pc.onicecandidate = function (e) {
-    console.log('onicecandidate')
+    console.log('onicecandidate',e)
     if (e.candidate) {
       ws.send(
         JSON.stringify({
