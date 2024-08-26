@@ -1,13 +1,17 @@
-export const init = (ws:WebSocket)=>{
+export const init = (ws:WebSocket,onReady: (start:() => void) => void)=>{
   ws.addEventListener('message', (d) => {
     const { event, data } = JSON.parse(d.data)
     if(event === 'offer'){
-      createAnswer(data).then((answer) => {
-        ws.send(JSON.stringify({
-          event: 'answer',
-          data:{ type: answer?.type, sdp: answer?.sdp }
-        }))
-      })
+      const start = ()=>{
+        createAnswer(data).then((answer) => {
+          ws.send(JSON.stringify({
+            event: 'answer',
+            data:{ type: answer?.type, sdp: answer?.sdp }
+          }))
+        })
+      }
+      onReady(start)
+
     }else if(event==='candidate'){
       addIceCandidate(data)
     }
@@ -36,6 +40,9 @@ export const init = (ws:WebSocket)=>{
   }
 
   async function getScreenStream() {
+    console.log('navigator.mediaDevices',navigator.mediaDevices);
+    console.log('navigator',navigator);
+
     return  navigator.mediaDevices
     .getUserMedia({
       audio: true,
