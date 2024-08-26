@@ -53,7 +53,7 @@ const Home: React.FC<HomeProps> = () => {
 
   return <div className={s['home-root']}>
     我是小程序端
-    <video ref={videoRef}></video>
+    <video ref={videoRef} className='video-instance'></video>
     <Button disabled={!ready} onClick={()=>{
       videoRef.current?.play()
     }}>
