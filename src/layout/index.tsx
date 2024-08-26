@@ -16,12 +16,12 @@ const Layout: React.FC<LayoutProps> = (componentProps) => {
     console.log('location')
     // console.log('getToken()', getToken());
 
-    if (!getToken()) {
-      setTimeout(() => {
-        navigate('/login')
-      }, 0)
-      return
-    }
+    // if (!getToken()) {
+    //   setTimeout(() => {
+    //     navigate('/login')
+    //   }, 0)
+    //   return
+    // }
     if (location.pathname !== curPathNameRef.current) {
       curPathNameRef.current = location.pathname
     }
@@ -29,7 +29,7 @@ const Layout: React.FC<LayoutProps> = (componentProps) => {
 
   return (
     <div className={s['layout-root']}>
-      <div className={s['side-menu-box']}>
+      {/* <div className={s['side-menu-box']}>
         <SideMenu />
       </div>
       <div className={s['content-box']}>
@@ -39,7 +39,8 @@ const Layout: React.FC<LayoutProps> = (componentProps) => {
         <div className={s['children-box']}>
           <Suspense fallback={<Loading />}>{outlet}</Suspense>
         </div>
-      </div>
+      </div> */}
+      <Suspense fallback={<Loading />}>{outlet}</Suspense>
     </div>
   )
 }

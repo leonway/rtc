@@ -23,6 +23,7 @@ function full(ele) {
 const Home: React.FC<HomeProps> = () => {
   const wsRef = useRef<WebSocket>()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [played, setPlayed] = useState(false)
   const [ready, setReady] = useState(false)
 
   const handleStream = (stream)=>{
