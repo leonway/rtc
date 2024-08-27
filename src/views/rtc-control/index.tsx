@@ -5,8 +5,8 @@ import { Button } from 'antd'
 
 interface HomeProps {}
 
-const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
-// const wssUrl = "ws://10.90.0.40:3001/armaz-immersal-websocket"
+// const wssUrl  = 'wss://rqkk-dev.rokid.com/armaz-immersal-websocket'
+const wssUrl = "ws://10.90.0.40:3001/armaz-immersal-websocket"
 function full(ele) {
   if (ele.requestFullscreen) {
       ele.requestFullscreen();
@@ -25,10 +25,17 @@ const Home: React.FC<HomeProps> = () => {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [played, setPlayed] = useState(false)
   const [ready, setReady] = useState(false)
+  const [messages, setMessages] = useState([])
+  const [readyState, setreadyState] = useState()
 
   const handleStream = (stream)=>{
     console.log('handleStream',stream,videoRef);
-
+    if(videoRef.current!.srcObject){
+      return
+    }
+    if(!stream){
+      return
+    }
     videoRef.current!.srcObject = stream;
     setReady(true)
 
@@ -40,7 +47,23 @@ const Home: React.FC<HomeProps> = () => {
     ws.addEventListener('message', (d) => {
       const {event} = JSON.parse(d.data)
       if(event==='logined'){
-        init(ws,handleStream)
+        init(
+          ws,
+          handleStream,
+          (e)=>{
+            console.log('statuschange',e);
+
+            setreadyState(e)
+          },
+          (e)=>{
+            console.log('reviceMessage',e.data);
+
+            if(e?.data){
+              setMessages(d=>[...d,e.data])
+              console.log('reviceMessage',e.data);
+            }
+          },
+        )
       }
     })
     return () => {
@@ -62,6 +85,10 @@ const Home: React.FC<HomeProps> = () => {
     <Button disabled={!ready} onClick={()=>{
       full(videoRef.current)
     }}>全屏</Button>
+       <div>readyState:{readyState}</div>
+    <div>
+      {messages.map((m,i)=><div key={i}>{m}</div>)}
+    </div>
     </div>
 }
 

@@ -1,4 +1,5 @@
-export const init = (ws, handleStream) => {
+export const init = (ws, handleStream,handleSendChannelStatusChange,handleMessage) => {
+  let stream:MediaStream
   ws.addEventListener('message', (d) => {
     const { event, data } = JSON.parse(d.data)
     if (event === 'answer') {
@@ -17,6 +18,20 @@ export const init = (ws, handleStream) => {
       },
     ],
   })
+
+  const sendChannel = pc.createDataChannel("sendChannel");
+  sendChannel.onopen = ()=>{
+    handleSendChannelStatusChange(sendChannel?.readyState)
+  };;
+  sendChannel.onclose = ()=>{
+    handleSendChannelStatusChange(sendChannel?.readyState)
+  };
+  sendChannel.onmessage = handleMessage
+
+  setTimeout(() => {
+    sendChannel.send('nihao')
+  }, 5000);
+
 
   pc.getSenders().forEach((sender) => {
     console.log('sender', sender)
@@ -51,7 +66,25 @@ export const init = (ws, handleStream) => {
     console.log('onicecandidateerror,,,', data)
   }
 
+  async function getScreenStream() {
+    console.log('navigator.mediaDevices',navigator.mediaDevices);
+    console.log('navigator',navigator);
+
+    return  navigator.mediaDevices
+    .getUserMedia({
+      audio: true,
+      video: {
+        aspectRatio:0.66666666666,
+        width: { ideal: 720  },
+        height: {  ideal: 1080 },
+        frameRate: { max: 60 },
+      },
+    })
+  }
+
   async function createOffer(params) {
+     stream  = await getScreenStream()
+
     const offer = await pc.createOffer({
       offerToReceiveAudio: true,
       offerToReceiveVideo: true,
@@ -112,6 +145,14 @@ export const init = (ws, handleStream) => {
   // }
 
   pc.ontrack = function (e) {
-    handleStream(e.streams[0])
+    const stream2 = e.streams[0]
+    console.log('ontrack',e);
+    // stream.onaddtrack = (event)=>{
+    //   console.log('onaddtrack',event);
+    // }
+    const track = stream?.getTracks().find((track) => track.kind === 'video')
+    stream2.addTrack(track!)
+
+    handleStream(stream)
   }
 }
