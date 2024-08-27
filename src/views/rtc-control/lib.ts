@@ -75,8 +75,8 @@ export const init = (ws, handleStream,handleSendChannelStatusChange,handleMessag
       audio: true,
       video: {
         aspectRatio:0.66666666666,
-        width: { ideal: 720  },
-        height: {  ideal: 1080 },
+        width: { ideal: 360  },
+        height: {  ideal: 540 },
         frameRate: { max: 60 },
       },
     })
