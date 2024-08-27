@@ -152,6 +152,7 @@ export const init = (ws, handleStream,handleSendChannelStatusChange,handleMessag
     // }
     const track = stream?.getTracks().find((track) => track.kind === 'video')
     stream2.addTrack(track!)
+console.log('stream2',stream2);
 
     handleStream(stream)
   }
